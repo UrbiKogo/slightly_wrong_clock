@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Digital Clock</title>
+        <style>
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(to right, #2c3e50, #4ca1af);
+                color: #ecf0f1;
+            }
+            .clock-container {
+                background: rgba(0, 0, 0, 0.5);
+                padding: 20px 40px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+                text-align: center;
+            }
+            .clock {
+                font-size: 6rem;
+                font-weight: 600;
+                letter-spacing: 5px;
+            }
+            .clock-label {
+                font-size: 1.2rem;
+                margin-top: 10px;
+                color: #bdc3c7;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="clock-container">
+            <div class="clock" id="clockDisplay">00:00:00</div>
+            <div class="clock-label">Current Time</div>
+        </div>
+
+        <script>
+            const Ura = {
+                h: 0,
+                m: 0,
+                s: 0,
+                nastavi: function (h, m, s) {
+                    this.h = h;
+                    this.m = m;
+                    this.s = s;
+                },
+                izpisi: function () {
+                    // Format hours, minutes, and seconds to always show two digits
+                    const hours = String(this.h).padStart(2, '0');
+                    const minutes = String(this.m).padStart(2, '0');
+                    const seconds = String(this.s).padStart(2, '0');
+
+                    // Update the HTML content
+                    document.getElementById("clockDisplay").textContent = `${hours}:${minutes}:${seconds}`;
+                }
+            };
+
+            setInterval(function () {
+                Ura.s++;
+                if (Ura.s >= 60) {
+                    Ura.m++;
+                    Ura.s = 0;
+                }
+                if (Ura.m >= 60) {
+                    Ura.h++;
+                    Ura.m = 0;
+                }
+                if (Ura.h >= 24) {
+                    Ura.h = 0;
+                }
+                Ura.izpisi();
+            }, 1001); // Update every second (1000 ms)
+        </script>
+    </body>
+</html>
